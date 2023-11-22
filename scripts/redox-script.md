@@ -44,29 +44,15 @@ On this presentation we will explain:
 
 ### Why Rust?
 
-- Rust help the developer to write better code
-- Rust reduce the chance to have bugs
-- Rust encourage the developer to evolve and optimize the software without fear of bugs
-- Rust code is easy to maintain and refactor
-
-### Memory Safety
-
-- The Rust compiler verify if all memory allocations are safe on compile-time
-- By doing this, Rust fix many memory defects that cause data corruption and security bugs
-- In Rust, the program don't need to pause to clean unused memory, because there's no garbage collector
-
-### Compiler Enforcement
-
-- The Rust compiler don't allow the execution of bad code
-- It help you to fix your code
-- It does runtime checks for integrity
-
+- A modern, ergonomic programming language with performance similar to C
+- Memory safe - no buffer overflows, null pointers or use-after-free
+- Excellent concurrency support
 ### Why a New OS?
 
-- Most operating systems use a monolithic kernel design, thus their kernels are too big and expensive to maintain, fix bugs and keep security
-- They are written in a memory unsafe language (like C and C++), it allow very bad bugs to happen
-- Show the full Rust potential with a Rust-based OS
-
+- Writing an OS in a safe, performant, ergonomic language was the primary goal
+- A microkernel architecture makes the OS more resilient in the face of hardware failures and software errors
+- It was a chance to improve several system components, and rewrite them in Rust
+  - RedoxFS, Orbital Window Manager, relibc (libc written in Rust) and many Rust versions of system utilities
 ### Design
 
 - Redox follow a microkernel-based architecture and a single system API called "Scheme"
@@ -109,7 +95,22 @@ Why?
 Why?
 
 - More program compatibility without modifications.
+### An emulated system call example - epoll
 
+- Linux's epoll provides a way to watch for data to become available on multiple file descriptors
+- The application provides a list of file descriptors to watch, some callback data, and an optional timeout
+- Linux's epoll is implemented in relibc using Redox's event scheme
+  - The application calls `epoll_create1`- internally, relibc calls `open` on the "event:" scheme, and returns the event_fd file descriptor
+  - The application calls `epoll_pwait` using the event_fd and a list of file descriptors to wait on - relibc does the following
+  - If a timeout is being used, the "time:" scheme is opened, and a message is written to the time_fd requesting a message in n milliseconds
+  - A message is written to the event_fd to watch the time_fd
+  - The list of file descriptors provided by the application is also written to the event_fd
+  - relibc then does a blocking read of the event_fd, waiting for activity
+  - The "event:" scheme, which is in the kernel, monitors activity on other schemes, and detects when a file descriptor is ready
+  - Since the "time:" scheme is implemented as file service, the timeout is just another file descriptor to watch
+  - When a monitored file descriptor becomes ready, the "read" of the event_fd unblocks and the list of active fds is read
+  - If there was a timeout event, it is deleted from the list of events before returning (this is transparent to the application)
+  - The application reads the list of active fds, as it would if it was running on Linux
 ### Bug Isolation
 
 - Most system components are isolated from other components on memory (different address spaces like normal programs), thus bugs on some system component can't spread to other components
