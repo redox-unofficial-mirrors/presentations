@@ -9,6 +9,7 @@ This script covers the first online presentation of Redox OS, I plan to follow t
 On this presentation we will explain:
 
 - What Is Redox OS?
+- Origin Story
 - Why Rust?
 - Memory Safety
 - Compiler Enforcement
@@ -18,6 +19,9 @@ On this presentation we will explain:
 - Device Drivers
 - Filesystems
 - System Calls
+- libredox
+- relibc
+- An emulated system call example - epoll
 - Bug Isolation
 - Rare Kernel Panics
 - Single System API
@@ -32,8 +36,6 @@ On this presentation we will explain:
 - How System Interfaces Are Implemented?
 - Hardware Support 
 - Program Compatibility
-- libredox
-- relibc
 - What It Runs?
 - Future Goals
 - Project Goals
@@ -42,25 +44,32 @@ On this presentation we will explain:
 
 - Redox OS is a general purpose operating system written in Rust. Our aim is to provide a fully functioning Unix-like microkernel-based operating system, that is secure, reliable and free
 
+### Origin Story
+
+In 2015 the Rust programming language became stable (version 1.0), Redox OS was one of the first operating systems to exist on this language, it started as an unikernel and gathered the attention of many Rust developers.
+
+They contributed and decided that the OS should be focused on security and reliability, thus the system migrated to a microkernel architecture and a single system API for resources.
+
+Minix and Plan 9 were the main inspiration.
+
 ### Why Rust?
 
 - A modern, ergonomic programming language with performance similar to C
 - Memory safe - no buffer overflows, null pointers or use-after-free
 - Excellent concurrency support
+
 ### Why a New OS?
 
 - Writing an OS in a safe, performant, ergonomic language was the primary goal
 - A microkernel architecture makes the OS more resilient in the face of hardware failures and software errors
 - It was a chance to improve several system components, and rewrite them in Rust
   - RedoxFS, Orbital Window Manager, relibc (libc written in Rust) and many Rust versions of system utilities
+
 ### Design
 
-- Redox follow a microkernel-based architecture and a single system API called "Scheme"
-
-### Microkernel
-
-- In a microkernel design, most system components are user-space daemons with inter-process communication (like Minix)
-- Drivers and filesystems, for example
+- Redox uses a microkernel-based architecture, with system services provided as "Schemes" (a communication API)
+- In a microkernel design, the kernel is kept to a minimum, just providing coordination between applications, services and resources
+- Most system services are user-space daemons using system calls for inter-process communication
 
 Why?
 
@@ -68,33 +77,39 @@ Why?
 
 ### Device Drivers
 
-- Drivers are user-space daemons
-- Being a common Unix process they can have their own namespace with restricted schemes
-- A driver on Redox can't damage other system interfaces
-
-Why?
-
-- Drivers on monolithic kernels can't be isolated from the kernel
-- In a monolithic kernel, a bad driver could wipe your data, because the driver run on the same address space of the filesystem (thus same privilege level)
+- Drivers are user-space daemons that access devices through mmap-style system calls and IRQ event messages
+- A panic or hang on a user-space driver won't halt the kernel - the driver can be restarted
 
 ### Filesystems
 
-- A filesystem on Redox is an user-space daemon
+- A filesystem on Redox is a user-space daemon that provides open, read, write functions and communicates with a device driver daemon
 
 Why?
 
-- Bad drivers or kernel bugs can't damage your data
 - The filesystem can be restarted without a system shutdown
 
 ### System Calls
 
 - The Redox system call interface is Unix-like
-- We have open, pipe, pipe2, lseek, read, write, brk and execv, for example
-- Currently, we support the most common Linux system calls
+- However, many POSIX and Linux system calls are emulated via libredox and relibc
+- We support the most common Linux system calls and are adding more to relibc, but we do not intend 100% POSIX or Linux compatibility
+
 
 Why?
 
 - More program compatibility without modifications.
+
+### libredox
+
+- A system library for Rust crates - libredox wraps system calls to provide a stable API/ABI while allowing Redox to change implementation details
+- libredox works in conjunction with relibc - for emulated system calls, the implementation is mostly within relibc
+
+
+### relibc
+
+- A C/C++ standard library written in Rust.
+- Redox uses it to offer C/C++ support for programs and libraries
+
 ### An emulated system call example - epoll
 
 - Linux's epoll provides a way to watch for data to become available on multiple file descriptors
@@ -188,15 +203,6 @@ Why?
 - Programs using ported Rust crates
 - Partial compatibility with POSIX programs
 - Source compatible with Linux/BSD programs and libraries
-
-### libredox
-
-- A system library for Rust crates
-
-### relibc
-
-- A C/C++ standard library written in Rust.
-- Redox uses it to offer C/C++ support for programs and libraries
 
 ### What It Runs?
 
