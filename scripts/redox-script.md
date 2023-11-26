@@ -157,7 +157,7 @@ Why?
 - pipe: - Kernel manager for pipes
 - serio: - Serial I/O (PS/2) driver (must stay in the kernel due to PS/2 protocol issues)
 - irq: - Interrupt manager (converts interrupts to messages)
-- time: - Real-time clock timerITimer (Interval timer)
+- time: - Real-time clock timer "ITimer" (Interval timer)
 - sys: - System hardware resources information
 - procfull: - Process context manager (proc)
 - procrestricted: - Process context manager (thisproc)
@@ -175,9 +175,9 @@ Why?
 - pcspkr: - PC speaker  (pcspkrd driver)
 - audiohw: - Sound boards (sb16d, ac97d and ihdad drivers)
 - disk.usb-{id}+{port}-scsi: - USB SCSI  (usbscsid driver)
-- network: - Ethernet adapters (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
+- network: - Ethernet boards (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
 - bga: - Bochs emulator/debugger  (bgad driver)
-- disk.live: -  (lived driver)
+- disk.live: - Streaming filesystem for exchanges between the storage device and RAM (lived driver)
 - acpi: - ACPI (acpid driver)
 - input: - Virtual device (inputd driver)
 - display.virtio-gpu: - VirtIO GPU (virtio-gpud driver)
