@@ -151,7 +151,7 @@ Why?
 
 - root: - Namespace manager
 - user: - Dispatch for user-space schemes
-- debug: - Debug messages that can't use the log scheme
+- debug: - Debug messages that can't use the log: scheme
 - event: - epoll-like file descriptor read/write "ready" events
 - memory: - Physical memory mapping manager
 - pipe: - Kernel manager for pipes
@@ -176,17 +176,17 @@ Why?
 - audiohw: - Audio boards (sb16d, ac97d and ihdad drivers)
 - disk.usb-{id}+{port}-scsi: - USB SCSI  (usbscsid driver)
 - network: - Ethernet adapters (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
-- bga: - Bochs emulator  (bgad driver)
+- bga: - Bochs emulator/debugger  (bgad driver)
 - disk.live: -  (lived driver)
 - acpi: - ACPI (acpid driver)
 - input: - Virtual device (inputd driver)
 - display.virtio-gpu: - VirtIO GPU (virtio-gpud driver)
 - display.vesa: - VESA (vesad driver)
-- zero: - Zeroes location (zerod service)
-- null: - Void location (nulld service)
+- zero: - Discard all writes, and always fill read buffers with zeroes (zerod service)
+- null: - Discard all writes, and read no bytes (nulld service)
 - escalate: - Privilege manager (escalated service)
 - pty: - Terminal manager and virtual device (ptyd driver)
-- rand: - Random number generator (randd service)
+- rand: - Pseudo-random number generator (randd service)
 - log: - Logging (logd service)
 - initfs: - Startup filesystem (bootstrap service)
 - audio: - Audio manager and virtual device (audiod service)
