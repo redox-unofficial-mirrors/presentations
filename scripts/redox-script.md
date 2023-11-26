@@ -149,7 +149,7 @@ Why?
 
 ### Kernel Schemes
 
-- root: - Namespace manager
+- : - Namespace manager
 - user: - Dispatch for user-space schemes
 - debug: - Debug messages that can't use the log: scheme
 - event: - epoll-like file descriptor read/write "ready" events
@@ -159,8 +159,8 @@ Why?
 - irq: - Interrupt manager (converts interrupts to messages)
 - time: - Real-time clock timer "ITimer" (Interval timer)
 - sys: - System hardware resources information
-- procfull: - Process context manager (proc)
-- procrestricted: - Process context manager (thisproc)
+- proc: - Process context manager
+- thisproc: - Process context manager
 
 ### User-Space Schemes
 
