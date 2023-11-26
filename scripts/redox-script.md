@@ -25,6 +25,8 @@ On this presentation we will explain:
 - Bug Isolation
 - Rare Kernel Panics
 - Single System API
+- Kernel Schemes
+- User-Space Schemes
 - Sandbox
 - Influences
 - Minix
@@ -144,6 +146,52 @@ Why?
 
 - Reduce the complexity of the system
 - More flexibility between components
+
+### Kernel Schemes
+
+- root: - Namespace manager
+- user: - Dispatch for user-space schemes
+- debug: - Debug messages that can't use the log scheme
+- event: - epoll-like file descriptor read/write "ready" events
+- memory: - Physical memory mapping manager
+- pipe: - Kernel manager for pipes
+- serio: - Serial I/O (PS/2) driver (must stay in the kernel due to PS/2 protocol issues)
+- irq: - Interrupt manager (converts interrupts to messages)
+- time: - Real-time clock timerITimer (Interval timer)
+- sys: - System hardware resources information
+- procfull: - Process context manager (proc)
+- procrestricted: - Process context manager (thisproc)
+
+### User-Space Schemes
+
+- file: - Redox filesystem (redoxfs service)
+- orbital: - Orbital GUI (window manager and virtual driver)
+- ip: - Network protocol (smolnetd service)
+- udp: - Network protocol (smolnetd service)
+- tcp: - Network protocol (smolnetd service)
+- icmp: - Network protocol (smolnetd service)
+- netcfg: - Network protocol (smolnetd service)
+- dns: - Network protocol (dnsd service)
+- pcspkr: - PC speaker  (pcspkrd driver)
+- audiohw: - Audio boards (sb16d, ac97d and ihdad drivers)
+- disk.usb-{id}+{port}-scsi: - USB SCSI  (usbscsid driver)
+- network: - Ethernet adapters (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
+- bga: - Bochs emulator  (bgad driver)
+- disk.live: -  (lived driver)
+- acpi: - ACPI (acpid driver)
+- input: - Virtual device (inputd driver)
+- display.virtio-gpu: - VirtIO GPU (virtio-gpud driver)
+- display.vesa: - VESA (vesad driver)
+- zero: - Zeroes location (zerod service)
+- null: - Void location (nulld service)
+- escalate: - Privilege manager (escalated service)
+- pty: - Terminal manager and virtual device (ptyd driver)
+- rand: - Random number generator (randd service)
+- log: - Logging (logd service)
+- initfs: - Startup filesystem (bootstrap service)
+- audio: - Audio manager and virtual device (audiod service)
+- chan: - Inter-process communication (ipcd service)
+- shm: - Shared memory manager (ipcd service)
 
 ### Sandbox
 
