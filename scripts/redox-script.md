@@ -164,7 +164,7 @@ Why?
 
 ### User-Space Schemes
 
-- file: - Redox filesystem (redoxfs service)
+- file: - Main filesystem (redoxfs service)
 - orbital: - Orbital GUI (window manager and virtual driver)
 - ip: - IP protocol (smolnetd service)
 - udp: - UDP sockets (smolnetd service)
@@ -177,7 +177,7 @@ Why?
 - disk.usb-{id}+{port}-scsi: - USB SCSI  (usbscsid driver)
 - network: - Ethernet boards (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
 - bga: - Bochs emulator/debugger  (bgad driver)
-- disk.live: - Streaming filesystem for exchanges between the storage device and RAM (lived driver)
+- disk.live: - RAM-disk driver that loads the bootable USB data into RAM (lived driver)
 - acpi: - ACPI (acpid driver)
 - input: - Virtual device (inputd driver)
 - display.virtio-gpu: - VirtIO GPU (virtio-gpud driver)
