@@ -159,6 +159,7 @@ Why?
 - irq: - Interrupt manager (converts interrupts to messages)
 - time: - Real-time clock timer "ITimer" (Interval timer)
 - sys: - System hardware resources information
+- kernel.acpi: - Read the CPU configuration (number of cores, etc)
 - proc: - Process context manager
 - thisproc: - Process context manager
 
@@ -174,10 +175,13 @@ Why?
 - dns: - DNS protocol (dnsd service)
 - pcspkr: - PC speaker  (pcspkrd driver)
 - audiohw: - Sound boards (sb16d, ac97d and ihdad drivers)
+- usb.*: - USB interfaces
+- disk.*: - Storage drivers
+- disk.live: - RAM-disk driver that loads the bootable USB data into RAM (lived driver)
 - disk.usb-{id}+{port}-scsi: - USB SCSI  (usbscsid driver)
+- logging: - Temporary filesystem (ramfs service)
 - network: - Ethernet boards (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
 - bga: - Bochs emulator/debugger  (bgad driver)
-- disk.live: - RAM-disk driver that loads the bootable USB data into RAM (lived driver)
 - acpi: - ACPI (acpid driver)
 - input: - Virtual device (inputd driver)
 - display.virtio-gpu: - VirtIO GPU (virtio-gpud driver)
