@@ -33,6 +33,20 @@ They contributed and decided that the OS should be focused on security and relia
 
 Minix and Plan 9 were the main inspiration.
 
+### Redox Basics Demo
+
+### Orbital
+
+### Ion shell
+
+### GNU Bash
+
+### Vim
+
+### Cosmic Editor
+
+### Doom
+
 ### Why Rust?
 
 - A modern, ergonomic programming language with performance similar to C
@@ -223,26 +237,35 @@ Our current development plans.
 ### Server Plans
 
 This is a higher priority than desktop because it is presumed to be a smaller scope.
+
 We have some work to do on optimizing drivers, especially network drivers.
+
 The foundation is very much there and porting common server programs is an important step to take - things like Apache, Nginx, etc.
 
 ### Self-Hosting the Redox Website
 
 We would like to host the Redox website on Redox running in a virtual machine.
+
 The Redox Summer of Code projects have been filling in some of the gaps we have had for virtual machines.
+
 Having drivers like the ones Andy worked on for VirtIO will enable much lower latency and higher performance virtual machines running Redox.
+
 It gets us to the point where we might be able to run Redox on a cloud machine, like EC2 or DigitalOcean.
 
 ### Virtual Machine Support
 
 There is a lot of work to be done on virtual machine support, device virtualization and Redox as a hypervisor.
+
 Some of the Summer of Code work was in this area, and we are hoping to see this work continue.
 
 ## Self-Hosting the Build System
 
 We want to self host the build system.
+
 This has been a very long term goal that we have been working on over the entire course of Redox, and a very important one.
+
 We have been able to port GCC, Binutils and other aspects of the build system to Redox, but the one remaining issue is that `rustc` itself doesn’t work very well on Redox.
+
 The work we have to fix that is pretty involved, it’s at all places in the stack.
 
 - We have to continue porting functions to `relibc`, and we have to continue porting Rust crates that that need Redox-specific changes.
@@ -254,19 +277,25 @@ The work we have to fix that is pretty involved, it’s at all places in the sta
 ### Cosmic Desktop
 
 The Cosmic Desktop is something being worked on at System 76, where Jeremy works.
+
 It’s an open source Linux desktop environment that is written mostly in Rust, and that aligns it with the goals of Redox.
+
 There are some things we need to work on to have Cosmic Desktop on Redox.
 
 - First, we need to port some of the applications that are going into Cosmic.
 For example, the text editor that Jeremy is working on for Cosmic can be ported to run on top of Orbital, which is our current window manager for Redox.
 - The second stage will be to port Wayland and the Cosmic compositor.
+
 That will allow us gain all the applications on Cosmic and the other elements of the shell by having an actual Wayland compositor.
+
 That will also enable us to easily port GTK, Qt, and other app frameworks like Electron.
+
 A large list of applications that run on Linux are able to be ported to any Wayland environment, and should require minimal patching to run on Redox.
 
 ### Developer Tools
 
 We need to work on porting developer tools to Redox.
+
 That involves identifying the tools we want to port and ensuring that they are running properly. We have a lot of the basic things there, like the ability to compile C programs, Python and Lua and some other scripting languages that have been partially ported.
 
 But the big one is still `rustc`, and then after that, porting other popular languages. Elixir and Go, for example, have their own runtime and are therefore more difficult than C and C++.
@@ -278,11 +307,17 @@ We also still have a lot of work to fully support C and C++, because of missing 
 We need to start giving more attention to performance and responsiveness, and making Desktop and Demo go faster is an important part of that.
 
 A majority of how people will interact with the system is to download our ISO and try it out on real hardware.
+
 That’s a common thing for Linux distributions and we should assume that people will be trying to do with Redox.
+
 Right now we have some issues that are stopping us in that direction.
+
 The support for virtual machines is far better than for real hardware.
+
 Our device drivers try to target common hardware, but they don't always work well.
+
 For example, the high definition audio driver may work on one machine but hang on another machine.
+
 Preventing hangs like that across the entire set of drivers that we have is a very important part to getting people to be able to see our demo image running on real hardware at native performance.
 
 Then there is optimization.
