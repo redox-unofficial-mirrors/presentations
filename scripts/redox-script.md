@@ -6,45 +6,24 @@ This script covers the first online presentation of Redox OS, I plan to follow t
 
 ### Prologue
 
-On this presentation we will explain:
-
 - What Is Redox OS?
-- Origin Story
-- Why Rust?
-- Memory Safety
-- Compiler Enforcement
-- Why a New OS?
-- Design
-- Microkernel
-- Device Drivers
-- Filesystems
-- System Calls
-- libredox
-- relibc
-- An emulated system call example - epoll
-- Bug Isolation
-- Rare Kernel Panics
-- Single System API
-- Kernel Schemes
-- User-Space Schemes
-- Sandbox
+- Redox Basics Demo
 - Influences
-- Minix
-- Plan 9
-- BSD
-- Linux
-- seL4
-- How It Works?
-- How System Interfaces Are Implemented?
-- Hardware Support 
-- Program Compatibility
-- What It Runs?
-- Future Goals
-- Project Goals
+- Design
+- Schemes
+- An emulated system call example - epoll
+- Current Status
+- Development Plans
+- Cosmic Editor Demo
 
 ### What Is Redox OS?
 
-- Redox OS is a general purpose operating system written in Rust. Our aim is to provide a fully functioning Unix-like microkernel-based operating system, that is secure, reliable and free
+Redox OS is a general purpose operating system.
+- The goal is a more secure, more reliable alternative to Linux
+- Written in Rust
+- Microkernel based
+- Server, Desktop and Minimal versions
+- MIT Licensed
 
 ### Origin Story
 
@@ -65,7 +44,7 @@ Minix and Plan 9 were the main inspiration.
 - Writing an OS in a safe, performant, ergonomic language was the primary goal
 - A microkernel architecture makes the OS more resilient in the face of hardware failures and software errors
 - It was a chance to improve several system components, and rewrite them in Rust
-  - RedoxFS, Orbital Window Manager, relibc (libc written in Rust) and many Rust versions of system utilities
+  - RedoxFS, Orbital Window Manager, relibc (libc written in Rust) and Rust versions of many system utilities
 
 ### Design
 
@@ -79,7 +58,7 @@ Why?
 
 ### Device Drivers
 
-- Drivers are user-space daemons that access devices through mmap-style system calls and IRQ event messages
+- Drivers are user-space daemons that access devices through mmap-like system calls and IRQ event messages
 - A panic or hang on a user-space driver won't halt the kernel - the driver can be restarted
 
 ### Filesystems
@@ -94,7 +73,8 @@ Why?
 
 - The Redox system call interface is Unix-like
 - However, many POSIX and Linux system calls are emulated via libredox and relibc
-- We support the most common Linux system calls and are adding more to relibc, but we do not intend 100% POSIX or Linux compatibility
+- We support the most common Linux system calls and are adding more to relibc
+- We do not intend 100% compatibility with Linux or POSIX
 
 
 Why?
@@ -209,27 +189,11 @@ Why?
 ### Influences
 
 - Redox was influenced by many Unix-like operating systems
-
-### Minix
-
-- The microkernel architecture and IPC model
-
-### Plan 9
-
-- The Scheme API for system communication and namespaces
-
-### BSD
-
-- The capability-based security system from Capsicum (FreeBSD)
-
-### Linux
-
-- System calls and performance optimizations
-
-### seL4
-
-- The microkernel design and component separation
-
+- Minix - The microkernel architecture and IPC model
+- Plan 9 - The Scheme API for system communication and namespaces
+- BSD - The capability-based security system from Capsicum (FreeBSD)
+- Linux - System calls and performance optimizations
+- seL4 - The microkernel design and component separation
 ### How It Works?
 
 - System components use system calls instead of internal kernel APIs
