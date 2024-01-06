@@ -156,16 +156,12 @@ Why?
 These are the most important kernel schemes from Redox (not exaustive list):
 
 - : - Namespace manager
-- user: - Dispatch for user-space schemes
 - event: - epoll-like file descriptor read/write "ready" events
 - memory: - Physical memory mapping manager
 - pipe: - Kernel manager for pipes
 - irq: - Interrupt manager (converts interrupts to messages)
 - time: - Real-time clock timer "ITimer" (Interval timer)
-- sys: - System hardware resources information
-- kernel.acpi: - Read the CPU configuration (number of cores, etc)
 - proc: - Process context manager
-- thisproc: - Process context manager
 
 ### User-Space Schemes
 
@@ -174,14 +170,9 @@ These are the most important user-space schemes from Redox (not exaustive list):
 - file: - Main filesystem (redoxfs service)
 - orbital: - Orbital GUI (window manager and virtual driver)
 - ip: - IP protocol (smolnetd service)
-- audiohw: - Sound boards (sb16d, ac97d and ihdad drivers)
-- usb.*: - USB interfaces
 - disk.*: - Storage drivers
 - network: - Ethernet boards (alxd, rtl8168d, ixgbed, e1000d and virtio-netd drivers)
 - escalate: - Privilege manager (escalated service)
-- initfs: - Startup filesystem (bootstrap service)
-- audio: - Audio manager and virtual device (audiod service)
-- chan: - Inter-process communication (ipcd service)
 - shm: - Shared memory manager (ipcd service)
 
 ### Sandbox
@@ -221,12 +212,11 @@ Why?
 
 ### What It Runs?
 
-- NetSurf browser
+- A desktop environment (Orbital)
+- The NetSurf browser
 - A graphical terminal emulator (orbterm)
-- Music (with rodioplay or ffplay from ffmpeg)
-- Video (ffplay from ffmpeg)
-- Some games like Doom (SDL1/SDL2 games)
-- Some emulators
+- Video and music files (with rodioplay or ffplay from ffmpeg)
+- Some emulators and games, like Doom
 - Some tools like Git and Vim
 - More soon
 
