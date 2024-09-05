@@ -20,6 +20,22 @@ Most memory allocations are verified by the compiler to prevent bugs, concurrenc
 Like Plan 9, all system resources are files (not RedoxFS file resources) and use the same interfaces for all tasks, it makes the system communication less complex and confusing.
 
 Each system component provide "schemes" that provide resources, the scheme path format is `/scheme/scheme-name/resource-name`
+
+- Copy-On-Write filesystem written in Rust
+
+RedoxFS is the main Redox filesystem inspired by ZFS, it has the following features:
+
+- Compatible with Redox and Linux (FUSE)
+- Copy-on-write
+- Data/metadata checksums
+- Transparent encryption
+- Standard Unix file attributes
+- File/directory size limit up to 193TiB (212TB)
+- File/directory quantity limit up to 4 billion per 193TiB (2^32 - 1 = 4294967295)
+- Disk encryption fully supported by the Redox bootloader, letting it load the kernel off an encrypted partition.
+- MIT licensed
+
+Being MIT licensed, RedoxFS can be bundled on GPL-licensed operating systems (Linux, for example).
 ```
 
 - Explain the [microkernel benefits](https://doc.redox-os.org/book/ch04-01-microkernels.html)
@@ -28,6 +44,8 @@ Each system component provide "schemes" that provide resources, the scheme path 
 - More Stable
 
 As most system components run on user-space with separated memory address spaces, a crash in one of them don't crash the whole system.
+
+Also non-storage drivers can't corrupt your data because they can't arbitrarily access the filesystem memory. While in monolithic kernels drivers and filesystems share the same memory address space (same privilege), thus a buggy driver can overwrite (corrupt) the filesystem data.
 
 - Better Security
 
@@ -53,6 +71,10 @@ Concurrent code is immune to data races.
 
 NULLs can't make undefined behavior.
 ```
+
+- Explain the drivers
+
+All Redox drivers are written in Rust, it avoid them to have memory errors and bad pointers that are very common bugs on drivers written in C.
 
 - Explain relibc
 
