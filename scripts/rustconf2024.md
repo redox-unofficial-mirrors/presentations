@@ -122,6 +122,7 @@ Currently Orbital supports the following GUI frontends:
 ```
 
 - Explain the [currently supported hardware](https://doc.redox-os.org/book/ch01-09-hardware-support.html)
+- Start the VM with the `make qemu uefi=yes disk=nvme` command for better performance and more screen resolutions/aspect ratios
 - Run common Unix tools (ls, cd, rm, cat, grep, mkdir, cp, free -h)
 - Show all installed programs (`ls /usr/bin`)
 - Download `bootstrap.sh` with curl
