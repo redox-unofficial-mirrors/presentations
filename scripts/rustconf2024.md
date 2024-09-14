@@ -1,12 +1,11 @@
 # RustConf 2024
 
-- Explain what Redox is
+### Explain what Redox is
 
 Redox OS is a microkernel-based general-purpose operating system written in Rust that aims to be a complete Linux/BSD alternative.
 
-- Explain the main features
+### Explain the main features
 
-```
 - Microkernel-based
 
 Most system components are common user processes that runs on user-space with root privileges and bugs don't change the memory of other system components causing data corruptions.
@@ -19,7 +18,7 @@ Most memory allocations are verified by the compiler to prevent bugs, concurrenc
 
 Like Plan 9, all system resources are files (not RedoxFS file resources) and use the same interfaces for all tasks, it makes the system communication less complex and confusing.
 
-Each system component provide "schemes" that provide resources, the scheme path format is `/scheme/scheme-name/resource-name`
+Each system component provide "schemes" that provide resources, the scheme path format is "/scheme/scheme-name/resource-name"
 
 - Copy-On-Write filesystem written in Rust
 
@@ -36,11 +35,9 @@ RedoxFS is the main Redox filesystem inspired by ZFS, it has the following featu
 - MIT licensed
 
 Being MIT licensed, RedoxFS can be bundled on GPL-licensed operating systems (Linux, for example).
-```
 
-- Explain the [microkernel benefits](https://doc.redox-os.org/book/ch04-01-microkernels.html)
+### Explain the [microkernel benefits](https://doc.redox-os.org/book/ch04-01-microkernels.html)
 
-```
 - More Stable
 
 As most system components run on user-space with separated memory address spaces, a crash in one of them don't crash the whole system.
@@ -54,11 +51,9 @@ Most security bugs can't spread to the whole system due to isolated system compo
 - Better Debugging
 
 As most system components are common user processes their crashes can be debugged without a kernel panic.
-```
 
-- Explain the [Rust benefits](https://doc.redox-os.org/book/ch01-06-why-rust.html)
+### Explain the [Rust benefits](https://doc.redox-os.org/book/ch01-06-why-rust.html)
 
-```
 - Memory-Safety
 
 All memory allocations are verified by the compiler to prevent bugs.
@@ -70,31 +65,29 @@ Concurrent code is immune to data races.
 - NULL-Safety
 
 NULLs can't make undefined behavior.
-```
 
-- Explain the drivers
+### Explain the drivers
 
 All Redox drivers are written in Rust, it avoid them to have memory errors and bad pointers that are very common bugs on drivers written in C.
 
-- Explain relibc
+### Explain relibc
 
 relibc (Redox C Library) is a C standard library written in Rust, it also contain the Redox scheme interface, POSIX translation layer and stable ABI.
 
-- Explain libredox
+### Explain libredox
 
 libredox (Redox System Library) is our library to provide a stable ABI for system components and programs.
 
-- Explain Contain
+### Explain Contain
 
 Contain is the Redox sandbox driver to manage namespaces and their resources with capabilities, it was inspired by the FreeBSD's Capsicum.
 
-- Explain Orbital
+### Explain Orbital
 
 Orbital is the Redox display server and window manager written in Rust, it does CPU rendering and support some GUI frontends.
 
-- Explain what [GUI backends support Orbital](https://doc.redox-os.org/book/ch04-09-graphics-windowing.html#libraries)
+### Explain what [GUI backends support Orbital](https://doc.redox-os.org/book/ch04-09-graphics-windowing.html#libraries)
 
-```
 Currently Orbital supports the following GUI frontends:
 
 - softbuffer
@@ -105,11 +98,9 @@ Currently Orbital supports the following GUI frontends:
 - SDL1.2
 - SDL2
 - Mesa3D's OSMesa
-```
 
-- Explain [notable programs](https://doc.redox-os.org/book/ch01-10-important-programs.html) that Redox can run
+### Explain [notable programs](https://doc.redox-os.org/book/ch01-10-important-programs.html) that Redox can run
 
-```
 - GCC
 - LLVM
 - FFMPEG
@@ -119,19 +110,38 @@ Currently Orbital supports the following GUI frontends:
 - Git
 - RustPython
 - GNU Bash
-```
 
-- Explain the [currently supported hardware](https://doc.redox-os.org/book/ch01-09-hardware-support.html)
-- Start the VM with the `make qemu uefi=yes disk=nvme` command for better performance and more screen resolutions/aspect ratios
-- Run common Unix tools (ls, cd, rm, cat, grep, mkdir, cp, free -h)
-- Show all installed programs (`ls /usr/bin`)
-- Download `bootstrap.sh` with curl
-- Print the `bootstrap.sh` file
-- Download the `acid` repository
-- Run `tokei` on the `acid` repository
+### Explain the [currently supported hardware](https://doc.redox-os.org/book/ch01-09-hardware-support.html)
+
+## Demo
+
+- Start the VM with the "make qemu uefi=yes disk=nvme" command for better performance and more screen resolutions/aspect ratios
+
+### Run common Unix tools (ls, cd, rm, cat, grep, mkdir, cp)
+
+- "cat Welcome.txt"
+- "grep "Redox" Welcome.txt"
+- "cp Welcome.txt test"
+- "ls"
+- "pwd"
+- "mkdir test"
+- "cd test"
+- "rm -r test"
+- "free -h"
+- "df -h"
+
+- Show all installed programs ("ls /usr/bin")
+- Download "bootstrap.sh" with curl ("curl -sf https://gitlab.redox-os.org/redox-os/redox/raw/master/bootstrap.sh -o bootstrap.sh
+")
+- Print the "bootstrap.sh" file ("cat bootstrap.sh")
+- Download the "acid" repository with benchmark ("time git clone https://gitlab.redox-os.org/redox-os/acid")
+- Run "tokei" on the "acid" repository ("tokei acid")
 - Play a music (ffplay)
 - Play a video (ffplay)
-- Do a directory processing benchmark (`time ls /usr/bin`)
-- Do a Git benchmark
-- Do a RAM benchmark using `dd`
-- Do a I/O benchmark using `dd`
+- Do a directory processing benchmark ("time ls /usr/bin")
+- Do a RAM benchmark using "dd" ("dd bs=1M count=1024 if=/scheme/zero of=/scheme/null
+")
+- Do a filesystem read benchmark using "dd" ("dd bs=1M count=256 if=/usr/games/neverball/neverball of=/scheme/null conv=fdatasync
+")
+- Do a filesystem write benchmark using "dd" ("dd bs=1M count=256 if=/usr/games/neverball/neverball of=fs_write_speed_bench conv=fdatasync
+")
